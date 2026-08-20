@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { Product } from '@/lib/supabase/types'
+import ProductGallery from '@/components/ProductGallery'
 import { useMembership } from '@/lib/context/membership'
 import ProductCard from '@/components/ProductCard'
 
@@ -15,13 +16,11 @@ export default function ProductDetailClient({
   relatedProducts,
 }: ProductDetailClientProps) {
   const { isClubhouseMember, loading } = useMembership()
-  const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [checkoutLoading, setCheckoutLoading] = useState(false)
   const [checkoutError, setCheckoutError] = useState<string | null>(null)
 
   const galleryImages = product.gallery_images || []
   const allImages = [product.main_image_url, ...galleryImages].filter(Boolean)
-  const currentImage = allImages[currentImageIndex] || product.main_image_url
 
   const saving = product.regular_price - product.clubhouse_price
 
@@ -63,42 +62,7 @@ export default function ProductDetailClient({
   return (
     <>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20">
-        {/* Images */}
-        <div className="space-y-4">
-          {currentImage && (
-            <div className="relative w-full aspect-square bg-cream-100 rounded-lg overflow-hidden">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={currentImage}
-                alt={product.name}
-                className="w-full h-full object-cover"
-              />
-            </div>
-          )}
-          {allImages.length > 1 && (
-            <div className="grid grid-cols-4 gap-2">
-              {allImages.map((img, idx) => (
-                <button
-                  key={idx}
-                  type="button"
-                  onClick={() => setCurrentImageIndex(idx)}
-                  aria-label={`View image ${idx + 1} of ${allImages.length}`}
-                  aria-current={idx === currentImageIndex}
-                  className={`relative aspect-square rounded overflow-hidden border-2 transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-espresso ${
-                    idx === currentImageIndex ? 'border-espresso' : 'border-cream-900'
-                  }`}
-                >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={img}
-                    alt=""
-                    className="w-full h-full object-cover"
-                  />
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
+        <ProductGallery images={allImages} productName={product.name} />
 
         {/* Product Info */}
         <div className="flex flex-col">
@@ -112,33 +76,29 @@ export default function ProductDetailClient({
           <div className="bg-cream-100 rounded-lg p-6 mb-8">
             {confirmedMember ? (
               <>
-                <div className="text-sm line-through text-slate-500 mb-1">
-                  ${product.regular_price.toFixed(2)}
+                <div className="text-xs uppercase tracking-widest text-espresso font-bold mb-1">
+                  Clubhouse Price
                 </div>
                 <div className="text-5xl font-bold text-espresso mb-2">
                   ${product.clubhouse_price.toFixed(2)}
                 </div>
-                <div className="text-xs uppercase tracking-widest text-espresso font-bold">
-                  Clubhouse Price
+                <div className="text-sm line-through text-slate-500">
+                  ${product.regular_price.toFixed(2)}
                 </div>
               </>
             ) : (
               <>
-                <div className="mb-4">
-                  <div className="text-sm text-slate-600 mb-1">Regular</div>
-                  <div className="text-xl font-semibold text-slate-900">
-                    ${product.regular_price.toFixed(2)}
-                  </div>
+                <div className="text-xs uppercase tracking-widest text-espresso font-bold mb-1">
+                  Clubhouse Price
                 </div>
-
-                <div className="pt-4 border-t border-cream-900">
-                  <div className="text-xs uppercase tracking-widest text-espresso font-bold mb-1">
-                    Clubhouse Price
+                <div className="text-5xl font-bold text-espresso mb-3">
+                  ${product.clubhouse_price.toFixed(2)}
+                </div>
+                <div className="pt-3 border-t border-cream-900">
+                  <div className="text-sm text-slate-600">
+                    Regular ${product.regular_price.toFixed(2)}
                   </div>
-                  <div className="text-5xl font-bold text-espresso mb-2">
-                    ${product.clubhouse_price.toFixed(2)}
-                  </div>
-                  <div className="text-sm font-semibold text-espresso">
+                  <div className="text-sm font-semibold text-espresso mt-1">
                     Save ${saving.toFixed(2)}
                   </div>
                 </div>

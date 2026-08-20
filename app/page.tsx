@@ -69,14 +69,17 @@ export default async function HomePage() {
                   </h2>
 
                   <div className="mb-6">
-                    <p className="text-sm text-slate-600 mb-1">
-                      Regular ${hero.regular_price.toFixed(2)}
-                    </p>
                     <p className="text-xs uppercase tracking-widest text-espresso font-bold mb-1">
                       Clubhouse Price
                     </p>
-                    <p className="text-5xl font-bold text-espresso">
+                    <p className="text-5xl font-bold text-espresso mb-2">
                       ${hero.clubhouse_price.toFixed(2)}
+                    </p>
+                    <p className="text-sm text-slate-600">
+                      Regular ${hero.regular_price.toFixed(2)} &middot;{' '}
+                      <span className="font-semibold text-espresso">
+                        Save ${(hero.regular_price - hero.clubhouse_price).toFixed(2)}
+                      </span>
                     </p>
                   </div>
 
@@ -131,16 +134,16 @@ export default async function HomePage() {
                   className="border border-cream-900 rounded-lg p-6 block hover:shadow-lg transition-shadow"
                 >
                   <h3 className="font-semibold text-slate-900 mb-4">{item.name}</h3>
-                  <p className="text-sm text-slate-600 mb-1">
-                    Regular ${item.regular_price.toFixed(2)}
-                  </p>
                   <p className="text-xs uppercase tracking-widest text-espresso font-bold mb-1">
                     Clubhouse
                   </p>
-                  <p className="text-3xl font-bold text-espresso mb-3">
+                  <p className="text-3xl font-bold text-espresso mb-2">
                     ${item.clubhouse_price.toFixed(2)}
                   </p>
-                  <p className="text-sm text-slate-600 pt-3 border-t border-cream-900">
+                  <p className="text-sm text-slate-600 pb-3">
+                    Regular ${item.regular_price.toFixed(2)}
+                  </p>
+                  <p className="text-sm font-semibold text-espresso pt-3 border-t border-cream-900">
                     Save ${(item.regular_price - item.clubhouse_price).toFixed(2)}
                   </p>
                 </Link>

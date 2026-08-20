@@ -46,28 +46,28 @@ export default function ProductCard({ product }: ProductCardProps) {
           <div>
             {confirmedMember ? (
               <>
-                <div className="text-sm line-through text-slate-500">
-                  ${product.regular_price.toFixed(2)}
+                <div className="text-xs uppercase tracking-widest text-espresso font-bold mb-1">
+                  Clubhouse Price
                 </div>
                 <div className="text-3xl font-bold text-espresso">
                   ${product.clubhouse_price.toFixed(2)}
                 </div>
-                <div className="text-xs uppercase tracking-widest text-espresso font-bold mt-1">
-                  Clubhouse Price
+                <div className="text-sm line-through text-slate-500 mt-1">
+                  ${product.regular_price.toFixed(2)}
                 </div>
               </>
             ) : (
               <>
-                <div className="text-sm text-slate-600">
-                  Regular ${product.regular_price.toFixed(2)}
-                </div>
-                <div className="text-xs uppercase tracking-widest text-espresso font-bold mt-2 mb-1">
+                <div className="text-xs uppercase tracking-widest text-espresso font-bold mb-1">
                   Clubhouse Price
                 </div>
                 <div className="text-3xl font-bold text-espresso">
                   ${product.clubhouse_price.toFixed(2)}
                 </div>
                 <div className="text-sm text-slate-600 mt-1">
+                  Regular ${product.regular_price.toFixed(2)}
+                </div>
+                <div className="text-sm font-semibold text-espresso mt-1">
                   Save ${saving.toFixed(2)}
                 </div>
               </>
